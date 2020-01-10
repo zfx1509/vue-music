@@ -3,7 +3,7 @@
     <scroll ref="scroll" class="recommend-content" :data="diskLists">
       <div>
         <div v-if="recommends.length" class="slider-wrapper">
-          <slider>
+          <slider class="slider-content">
             <div v-for="item in recommends" :key="item.id">
               <a :href="item.linkUrl">
                 <img class="needsclick" @load="loadImage" :src="item.picUrl"/>
@@ -99,6 +99,11 @@ export default {
         position: relative
         width: 100%
         overflow: hidden
+        .slider-content
+          width: 100%
+          height: 0
+          padding-bottom: 36.25%
+          overflow: hidden
 
       .recommend-list
         .list-title
