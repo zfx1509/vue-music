@@ -17,6 +17,13 @@ module.exports = {
         pathRewrite: {
           '^/music': '/music'
         }
+      },
+      '/cgi-bin': {
+        target: 'https://u.y.qq.com',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/cgi-bin': '/cgi-bin'
+        }
       }
     },
 
