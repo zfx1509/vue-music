@@ -25,7 +25,7 @@ export default {
       singers: []
     }
   },
-  created () {
+  activated () {
     this._getSingerList()
   },
   methods: {
