@@ -70,7 +70,7 @@ import {mapGetters, mapMutations} from 'vuex'
 import animations from 'create-keyframe-animation'
 import {prefixStyle} from '@/common/js/dom'
 
-const transform = prefixStyle.transform
+const transform = prefixStyle('transform')
 
 export default {
   name: 'player',
@@ -87,7 +87,6 @@ export default {
     },
     open () {
       this.setFullScreen(true)
-      console.log(this.fullScreen)
     },
     enter (el, done) {
       const {x, y, scale} = this._getPosAndScale()
@@ -119,8 +118,8 @@ export default {
     leave (el, done) {
       this.$refs.cdWrapper.style.transition = 'all 0.4s'
       const {x, y, scale} = this._getPosAndScale()
-      this.$refs.cdWrapper.style[transform] = `translate3d(${x}px, ${y}px, 0,) scale(${scale})`
-      this.$refs.cdWrapper.addEventListener('transitioned', done)
+      this.$refs.cdWrapper.style[transform] = `translate3d(${x}px, ${y}px, 0) scale(${scale})`
+      this.$refs.cdWrapper.addEventListener('transitionend', done)
     },
     afterLeave () {
       this.$refs.cdWrapper.style.transition = ''
