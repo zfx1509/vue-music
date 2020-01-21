@@ -1,4 +1,4 @@
-import axios from 'common/js/axios'
+import {axiosGet} from 'common/js/axios'
 import {ERR_OK} from '@/api/config'
 import {commonJsonParams, generateSongVkeyData} from './config'
 
@@ -14,6 +14,21 @@ export function generateSongUrl (guid, songmid, songtype) {
   })
 }
 
+export function getlyric (songmid) {
+  const url = '/music/api/lyric'
+  const data = Object.assign({}, commonJsonParams, {
+    songmid,
+    platform: 'yqq',
+    hostUin: 0,
+    needNewCode: 0,
+    categoryId: 10000000,
+    pcachetime: Date.parse(new Date())
+  })
+  return axiosGet(url, data).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
 function getSongUrl (songmid, songtype) {
   const guid = getGuid()
   const url = '/cgi-bin/musicu.fcg'
@@ -23,7 +38,7 @@ function getSongUrl (songmid, songtype) {
     hostUin: 0,
     needNewCode: 0
   }, songVkeyData)
-  return axios(url, data)
+  return axiosGet(url, data)
 }
 
 function getGuid () {

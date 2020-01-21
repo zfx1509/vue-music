@@ -1,4 +1,4 @@
-import axios from 'common/js/axios'
+import {axiosGet} from 'common/js/axios'
 import {commonJsonParams, recommendData} from './config'
 
 export function getRecommend () {
@@ -8,7 +8,7 @@ export function getRecommend () {
     hostUin: 0,
     needNewCode: 0
   }, recommendData)
-  return axios(url, data)
+  return axiosGet(url, data)
 }
 
 export function getDiskList () {
@@ -23,5 +23,5 @@ export function getDiskList () {
     categoryId: 10000000,
     rnd: 0.8460504040667609
   })
-  return axios(url, data)
+  return axiosGet(url, data)
 }

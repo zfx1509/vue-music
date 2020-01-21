@@ -1,14 +1,14 @@
 import originAxios from 'axios'
 
-export default function axios(url, data) {
+export function axiosGet(url, data) {
   url += (url.indexOf('?') < 0 ? '?' : '&') + param(data)
 
   return new Promise((resolve, reject) => {
-    originAxios(url, data).then(res => resolve(res)).catch(err => reject(err))
+    originAxios.get(url, data).then(res => resolve(res)).catch(err => reject(err))
   })
 }
 
-export function param(data) {
+function param(data) {
   let url = ''
   for (var k in data) {
     let value = data[k] !== undefined ? data[k] : ''
