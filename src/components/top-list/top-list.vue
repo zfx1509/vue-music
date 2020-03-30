@@ -1,50 +1,52 @@
 <template>
-  <transition name="side">
-    <music-list :title="title" :bg-image="bgImage" :songs="songs"></music-list>
+  <transition name="slide">
+    <music-list :title="title" :bg-image="bgImage" :songs="songs" :rank="rank"></music-list>
   </transition>
 </template>
 
 <script type="text/ecmascript-6">
-import MusicList from 'components/music-list/music-list'
+import MusicList from '@/components/music-list/music-list'
 import {mapGetters} from 'vuex'
-import {getSongList} from '@/api/recommend'
+import {getMusicList} from '@/api/rank'
 import {ERR_OK} from '@/api/config'
 import {createSong} from '@/common/js/song'
 import {generateRecommendSongUrl} from '@/api/song'
 
 export default {
-  name: 'disc',
-  components: {
-    MusicList
-  },
+  name: 'top-list',
+  components: {MusicList},
   created() {
-    this._getSongList()
+    this._getMusicList()
   },
   data() {
     return {
-      songs: []
+      songs: [],
+      rank: true
     }
   },
   computed: {
     title() {
-      return this.disc.dissname
+      return this.topList.topTitle
     },
     bgImage() {
-      return this.disc.imgurl
+      if (this.songs.length) {
+        return this.songs[0].image
+      }
+      return ''
     },
     ...mapGetters([
-      'disc'
+      'topList'
     ])
   },
   methods: {
-    _getSongList() {
-      if (!this.disc.dissid) {
-        this.$router.push('/recommend')
+    _getMusicList() {
+      if (!this.topList.id) {
+        this.$router.push('/rank')
         return
       }
-      getSongList(this.disc.dissid).then(res => {
-        if (res.data.code === ERR_OK) {
-          this._normalizeSongs(res.data.cdlist[0].songlist)
+      getMusicList(this.topList.id).then(res => {
+        if (res.code === ERR_OK) {
+          this._normalizeSongs(res.songlist)
         }
       })
     },
@@ -53,7 +55,7 @@ export default {
       let songmids = []
       let songtypes = []
       lists.forEach((item) => {
-        let musicData = item
+        let musicData = item.data
         if (musicData.songmid && musicData.albummid) {
           songmids.push(musicData.songmid)
           songtypes.push(0)
@@ -62,7 +64,7 @@ export default {
       generateRecommendSongUrl(songmids, songtypes).then(res => {
         if (res.data.expiration !== 0) {
           res.data.midurlinfo.forEach((item, index) => {
-            let musicData = lists[index]
+            let musicData = lists[index].data
             musicData.url = item.purl
             if (musicData.url && musicData.albummid) {
               ret.push(createSong(musicData))
@@ -80,7 +82,7 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   .slide-enter-active, .slide-leave-active
-    transition: all 0.3s
+    transition: all 0.3s ease
 
   .slide-enter, .slide-leave-to
     transform: translate3d(100%, 0, 0)

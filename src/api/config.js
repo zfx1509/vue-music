@@ -29,7 +29,7 @@ export function generateSongVkeyData(guid, songmid, songtype) {
 export function generateRecommendSongVkeyData(guid, songmid, songtype) {
   return {
     comm: {
-      g_tk: 5381,
+      g_tk: 1928093487,
       inCharset: 'utf-8',
       outCharset: 'utf-8',
       notice: 0,
