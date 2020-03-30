@@ -8,6 +8,12 @@ export function axiosGet(url, data) {
   })
 }
 
+export function axiosPost(url, data) {
+  return new Promise((resolve, reject) => {
+    originAxios.post(url, data).then(res => resolve(res)).catch(err => reject(err))
+  })
+}
+
 function param(data) {
   let url = ''
   for (var k in data) {

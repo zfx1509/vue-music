@@ -1,10 +1,10 @@
-import {axiosGet} from 'common/js/axios'
+import {axiosGet, axiosPost} from 'common/js/axios'
 import {ERR_OK} from '@/api/config'
-import {commonJsonParams, generateSongVkeyData} from './config'
+import {commonJsonParams, generateSongVkeyData, generateRecommendSongVkeyData} from './config'
 
-export function generateSongUrl (guid, songmid, songtype) {
+export function generateSongUrl (songmid, songtype) {
   return new Promise((resolve, reject) => {
-    getSongUrl(guid, songmid, songtype).then(res => {
+    getSongUrl(songmid, songtype).then(res => {
       if (res.data.code === ERR_OK) {
         resolve({data: res.data.req_0.data.midurlinfo})
       }
@@ -29,6 +29,18 @@ export function getlyric (songmid) {
   })
 }
 
+export function generateRecommendSongUrl(songmid, songtype) {
+  return new Promise((resolve, reject) => {
+    getRecommendSongUrl(songmid, songtype).then(res => {
+      if (res.data.code === ERR_OK) {
+        resolve({data: res.data.req_0.data})
+      }
+    }).catch(err => {
+      resolve({data: err})
+    })
+  })
+}
+
 function getSongUrl (songmid, songtype) {
   const guid = getGuid()
   const url = '/cgi-bin/musicu.fcg'
@@ -39,6 +51,13 @@ function getSongUrl (songmid, songtype) {
     needNewCode: 0
   }, songVkeyData)
   return axiosGet(url, data)
+}
+
+function getRecommendSongUrl(songmid, songtype) {
+  const guid = `${getGuid()}`
+  const url = '/music/api/getPurlUrl'
+  const recommendSongVkeyData = generateRecommendSongVkeyData(guid, songmid, songtype)
+  return axiosPost(url, recommendSongVkeyData)
 }
 
 function getGuid () {

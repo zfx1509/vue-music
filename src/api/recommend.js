@@ -25,3 +25,19 @@ export function getDiskList () {
   })
   return axiosGet(url, data)
 }
+
+export function getSongList(disstid) {
+  const url = '/music/api/getCdInfo'
+  const data = Object.assign({}, commonJsonParams, {
+    format: 'jsonp',
+    disstid,
+    type: 1,
+    json: 1,
+    utf8: 1,
+    onlysong: 0,
+    platform: 'yqq',
+    hostUin: 0,
+    needNewCode: 0
+  })
+  return axiosGet(url, data)
+}
