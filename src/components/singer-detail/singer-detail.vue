@@ -20,7 +20,10 @@ export default {
       songs: []
     }
   },
-  activated: function () {
+  activated() {
+    this._getDetail()
+  },
+  created() {
     this._getDetail()
   },
   computed: {
