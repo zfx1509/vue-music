@@ -1,6 +1,5 @@
 import jsonp from '@/common/js/jsonp'
-import {axiosGet} from '@/common/js/axios'
-import {commonJsonpParams, options, commonJsonParams} from './config'
+import {commonJsonpParams, options} from './config'
 
 export function getHotKey() {
   const url = 'https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg'
@@ -13,8 +12,8 @@ export function getHotKey() {
 }
 
 export function search(w, p, catZhida) {
-  const url = '/music/api/search'
-  const data = Object.assign({}, commonJsonParams, {
+  const url = '/music/soso/fcgi-bin/search_for_qq_cp'
+  const data = Object.assign({}, commonJsonpParams, {
     w,
     p,
     perpage: 20,
@@ -31,5 +30,5 @@ export function search(w, p, catZhida) {
     needNewCode: 1,
     platform: 'h5'
   })
-  return axiosGet(url, data)
+  return jsonp(url, data, options)
 }

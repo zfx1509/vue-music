@@ -12,10 +12,15 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/music': {
-        target: 'http://ustbhuangyi.com',
+        target: 'https://c.y.qq.com',
         changeOrigin: true,
+        ws: true,
         pathRewrite: {
-          '^/music': '/music'
+          '^/music': ''
+        },
+        headers: {
+          referer: 'https://c.y.qq.com/',
+          origin: 'c.y.qq.com'
         }
       },
       '/cgi-bin': {

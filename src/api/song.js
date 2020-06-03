@@ -15,7 +15,7 @@ export function generateSongUrl (songmid, songtype) {
 }
 
 export function getlyric (songmid) {
-  const url = '/music/api/lyric'
+  const url = '/music/lyric/fcgi-bin/fcg_query_lyric_new.fcg'
   const data = Object.assign({}, commonJsonParams, {
     songmid,
     platform: 'yqq',
@@ -55,7 +55,7 @@ function getSongUrl (songmid, songtype) {
 
 function getRecommendSongUrl(songmid, songtype) {
   const guid = `${getGuid()}`
-  const url = '/music/api/getPurlUrl'
+  const url = '/cgi-bin/musicu.fcg'
   const recommendSongVkeyData = generateRecommendSongVkeyData(guid, songmid, songtype)
   return axiosPost(url, recommendSongVkeyData)
 }

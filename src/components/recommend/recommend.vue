@@ -5,7 +5,7 @@
         <div v-if="recommends.length" class="slider-wrapper">
           <slider class="slider-content">
             <div v-for="item in recommends" :key="item.id">
-              <img class="needsclick" @load="loadImage" :src="item.picUrl"/>
+              <img class="needsclick" @load="loadImage" :src="item.cover"/>
             </div>
           </slider>
         </div>
@@ -63,7 +63,7 @@ export default {
     _getRecommend () {
       getRecommend().then(res => {
         if (res.data.code === ERR_OK) {
-          this.recommends = res.data.data.slider
+          this.recommends = res.data.focus.data.shelf.v_niche[0].v_card
         }
       })
     },
